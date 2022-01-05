@@ -12,7 +12,7 @@ import java.util.concurrent.*;
 
 public class ClientWindow extends JFrame implements ActionListener, TCPConnectionListener {
 
-    private static final int CLIENTS = 3;
+    private static final int CLIENTS = 1;
 
     public static void main(String[] args) {
         //start 3 examples of clients
@@ -49,7 +49,7 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
 
         add(log, BorderLayout.CENTER);
         add(filedInput, BorderLayout.SOUTH);
-        add(nickname, BorderLayout.NORTH);
+//        add(nickname, BorderLayout.NORTH);
 
         //authorization
 //        new AuthorizationFrame();
