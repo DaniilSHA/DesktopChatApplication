@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.concurrent.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ClientWindow extends JFrame implements ActionListener, TCPConnectionListener {
 
@@ -49,21 +51,15 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
 
         add(log, BorderLayout.CENTER);
         add(filedInput, BorderLayout.SOUTH);
-//        add(nickname, BorderLayout.NORTH);
 
         //authorization
-//        new AuthorizationFrame();
-
-        setVisible(true);
-        try {
-            connection = new TCPConnection(this, "localhost", 8189);
-        } catch (IOException e) {
-            printMsg("Connection exception: " + e);
-        }
+        new AuthorizationFrame(this);
     }
 
     public synchronized void setNickname(String nickname) {
         this.nickname = new JLabel(nickname);
+        add(this.nickname, BorderLayout.NORTH);
+        setVisible(true);
     }
 
     public synchronized void setConnection(TCPConnection connection) {
