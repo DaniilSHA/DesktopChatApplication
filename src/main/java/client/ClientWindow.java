@@ -27,13 +27,12 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
         }
     }
 
-    private static final String IP_ADDR = "localhost";
-    private static final int PORT = 8189;
+    private JLabel nickname;
     private TCPConnection connection;
+
     private static final int WIDTH = 600;
     private static final int HEIGHT = 400;
     private final JTextArea log = new JTextArea();
-    private final JTextField filedNickname = new JTextField("Daniil");
     private final JTextField filedInput = new JTextField();
 
     private ClientWindow() {
@@ -41,7 +40,6 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
-
 
         //settings log
         log.setEditable(false);
@@ -51,14 +49,25 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
 
         add(log, BorderLayout.CENTER);
         add(filedInput, BorderLayout.SOUTH);
-        add(filedNickname, BorderLayout.NORTH);
+        add(nickname, BorderLayout.NORTH);
+
+        //authorization
+//        new AuthorizationFrame();
 
         setVisible(true);
         try {
-            connection = new TCPConnection(this, IP_ADDR, PORT);
+            connection = new TCPConnection(this, "localhost", 8189);
         } catch (IOException e) {
             printMsg("Connection exception: " + e);
         }
+    }
+
+    public synchronized void setNickname(String nickname) {
+        this.nickname = new JLabel(nickname);
+    }
+
+    public synchronized void setConnection(TCPConnection connection) {
+        this.connection = connection;
     }
 
     @Override
@@ -66,7 +75,7 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
         String msg = filedInput.getText();
         if (msg.equals("")) return;
         filedInput.setText(null);
-        connection.sendString(filedNickname.getText() + ": " + msg);
+        connection.sendString(nickname.getText() + ": " + msg);
     }
 
     @Override
