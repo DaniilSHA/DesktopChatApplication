@@ -42,6 +42,7 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
 
+
         //settings log
         log.setEditable(false);
         log.setLineWrap(true);
