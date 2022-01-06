@@ -14,7 +14,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class ClientWindow extends JFrame implements ActionListener, TCPConnectionListener {
 
-    private static final int CLIENTS = 3;
+    private static final int CLIENTS = 1;
 
     public static void main(String[] args) {
         //start 3 examples of clients
@@ -84,6 +84,10 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
     public void actionPerformed(ActionEvent e) {
         String msg = filedInput.getText();
         if (msg.equals("")) return;
+        if (msg.contains("[connectionsListMSG]")) {
+            JOptionPane.showMessageDialog(this, "ERROR: using prohibited combination: [connectionsListMSG]");
+            return;
+        }
         filedInput.setText(null);
         connection.sendString(nickname.getText().substring(15) + ": " + msg);
     }
@@ -108,6 +112,9 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
     @Override
     public void onDisconnect(TCPConnection tcpConnection) {
         printMsgToLog("Connection close");
+        JOptionPane.showMessageDialog(this, "ERROR: connection failed");
+        new AuthorizationFrame(this);
+        setVisible(false);
     }
 
     @Override
