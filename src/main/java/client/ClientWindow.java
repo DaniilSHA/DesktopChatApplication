@@ -14,7 +14,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class ClientWindow extends JFrame implements ActionListener, TCPConnectionListener {
 
-    private static final int CLIENTS = 1;
+    private static final int CLIENTS = 3;
 
     public static void main(String[] args) {
         //start 3 examples of clients
@@ -35,6 +35,7 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
     private static final int WIDTH = 600;
     private static final int HEIGHT = 400;
     private final JTextArea log = new JTextArea();
+    private final JTextArea connectionsInfo = new JTextArea();
     private final JTextField filedInput = new JTextField();
 
     private ClientWindow() {
@@ -42,14 +43,25 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
+        setResizable(false);
 
-        //settings log
+        //settings log & connectionsInfo
         log.setEditable(false);
         log.setLineWrap(true);
+        log.setPreferredSize(new Dimension(400, 350));
+        connectionsInfo.setEditable(false);
+        connectionsInfo.setLineWrap(true);
+        connectionsInfo.setPreferredSize(new Dimension(200, 350));
+        connectionsInfo.setBackground(Color.CYAN);
+
+        JPanel textPanel = new JPanel();
+        textPanel.setLayout(new FlowLayout());
+        textPanel.add(log);
+        textPanel.add(connectionsInfo);
 
         filedInput.addActionListener(this);
 
-        add(log, BorderLayout.CENTER);
+        add(textPanel, BorderLayout.WEST);
         add(filedInput, BorderLayout.SOUTH);
 
         //authorization
@@ -57,9 +69,11 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
     }
 
     public synchronized void setNickname(String nickname) {
-        this.nickname = new JLabel(nickname);
+        this.nickname = new JLabel("your nickname: " + nickname);
+        this.nickname.setHorizontalAlignment(SwingConstants.CENTER);
         add(this.nickname, BorderLayout.NORTH);
         setVisible(true);
+        connection.sendString("[connectionsListMSG]" + this.nickname.getText().substring(15));
     }
 
     public synchronized void setConnection(TCPConnection connection) {
@@ -71,30 +85,41 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
         String msg = filedInput.getText();
         if (msg.equals("")) return;
         filedInput.setText(null);
-        connection.sendString(nickname.getText() + ": " + msg);
+        connection.sendString(nickname.getText().substring(15) + ": " + msg);
     }
 
     @Override
     public void onConnectionReady(TCPConnection tcpConnection) {
-        printMsg("Connection ready...");
+        printMsgToLog("Connection ready...");
     }
 
     @Override
     public void onReceiveString(TCPConnection tcpConnection, String value) {
-        printMsg(value);
+        if (value.startsWith("[connectionsListMSG]")) {
+            StringBuilder validConnInfo = new StringBuilder();
+            String[] nicknames = value.substring(20).split("-");
+            for (int i = nicknames.length - 1; i >= 0; i--) {
+                validConnInfo.append("    \u00B7  " + nicknames[i] + "\n");
+            }
+            printMsgToConnInfo(validConnInfo.toString());
+        } else printMsgToLog(value);
     }
 
     @Override
     public void onDisconnect(TCPConnection tcpConnection) {
-        printMsg("Connection close");
+        printMsgToLog("Connection close");
     }
 
     @Override
     public void onException(TCPConnection tcpConnection, Exception e) {
-        printMsg("Connection exception: " + e);
+        printMsgToLog("Connection exception: " + e);
     }
 
-    private synchronized void printMsg(String msg) {
+    private synchronized void sendNickname() {
+        connection.sendString("[connectionListMSG]" + nickname.getText().substring(15));
+    }
+
+    private synchronized void printMsgToLog(String msg) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -104,4 +129,14 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
         });
     }
 
+    private synchronized void printMsgToConnInfo(String msg) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                connectionsInfo.setText(null);
+                connectionsInfo.append("               Users connected:" + "\n");
+                connectionsInfo.append(msg);
+            }
+        });
+    }
 }
