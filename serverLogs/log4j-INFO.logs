@@ -1,0 +1,19 @@
+2022-01-06 21:08:25 INFO  ChatServer:27 - Server running...
+2022-01-06 21:08:41 INFO  ChatServer:56 - Client [Danil] connected: {TCPConnection: /127.0.0.1: 49803}
+2022-01-06 21:08:50 INFO  ChatServer:56 - Client [Petr] connected: {TCPConnection: /127.0.0.1: 49804}
+2022-01-06 21:09:01 INFO  ChatServer:56 - Client [Vova] connected: {TCPConnection: /127.0.0.1: 49805}
+2022-01-06 21:09:06 INFO  ChatServer:59 - Client [Vova] msg: Vova: Привет всем
+2022-01-06 21:09:12 INFO  ChatServer:59 - Client [Danil] msg: Danil: хаахаха
+2022-01-06 21:09:21 INFO  ChatServer:59 - Client [Petr] msg: Petr: привет, как дела?
+2022-01-06 21:09:23 ERROR ChatServer:73 - TCPConnection exceptionjava.net.SocketException: Connection reset
+2022-01-06 21:09:23 ERROR ChatServer:73 - TCPConnection exceptionjava.net.SocketException: Connection reset
+2022-01-06 21:09:23 INFO  ChatServer:65 - Client [Vova] disconnected: {TCPConnection: /127.0.0.1: 49805}
+2022-01-06 21:09:23 ERROR ChatServer:73 - TCPConnection exceptionjava.net.SocketException: Connection reset by peer: socket write error
+2022-01-06 21:09:23 ERROR ChatServer:73 - TCPConnection exceptionjava.net.SocketException: Connection reset by peer: socket write error
+2022-01-06 21:09:23 ERROR ChatServer:73 - TCPConnection exceptionjava.net.SocketException: Socket closed
+2022-01-06 21:09:23 ERROR ChatServer:73 - TCPConnection exceptionjava.net.SocketException: Socket closed
+2022-01-06 21:09:23 ERROR ChatServer:73 - TCPConnection exceptionjava.net.SocketException: Connection reset
+2022-01-06 21:09:23 INFO  ChatServer:65 - Client [Petr] disconnected: {TCPConnection: /127.0.0.1: 49804}
+2022-01-06 21:09:23 ERROR ChatServer:73 - TCPConnection exceptionjava.net.SocketException: Socket closed
+2022-01-06 21:09:23 ERROR ChatServer:73 - TCPConnection exceptionjava.net.SocketException: Socket closed
+2022-01-06 21:09:23 INFO  ChatServer:65 - Client [Danil] disconnected: {TCPConnection: /127.0.0.1: 49803}

@@ -1,0 +1,9 @@
+2022-01-06 21:09:23 ERROR ChatServer:73 - TCPConnection exceptionjava.net.SocketException: Connection reset
+2022-01-06 21:09:23 ERROR ChatServer:73 - TCPConnection exceptionjava.net.SocketException: Connection reset
+2022-01-06 21:09:23 ERROR ChatServer:73 - TCPConnection exceptionjava.net.SocketException: Connection reset by peer: socket write error
+2022-01-06 21:09:23 ERROR ChatServer:73 - TCPConnection exceptionjava.net.SocketException: Connection reset by peer: socket write error
+2022-01-06 21:09:23 ERROR ChatServer:73 - TCPConnection exceptionjava.net.SocketException: Socket closed
+2022-01-06 21:09:23 ERROR ChatServer:73 - TCPConnection exceptionjava.net.SocketException: Socket closed
+2022-01-06 21:09:23 ERROR ChatServer:73 - TCPConnection exceptionjava.net.SocketException: Connection reset
+2022-01-06 21:09:23 ERROR ChatServer:73 - TCPConnection exceptionjava.net.SocketException: Socket closed
+2022-01-06 21:09:23 ERROR ChatServer:73 - TCPConnection exceptionjava.net.SocketException: Socket closed
